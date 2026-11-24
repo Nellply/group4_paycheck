@@ -155,6 +155,50 @@
                 <label for="dailyRateInput">Daily Rate (<span class="curr-sym">$</span>)</label>
                 <input type="number" id="dailyRateInput" class="form-input font-bold" value="264.00" min="0" step="any" />
               </div>
+
+              <div class="optional-schedule-wrapper">
+                <button type="button" id="toggleMonthlyDaysBtn" class="btn-sub-toggle" aria-expanded="false">
+                  <div class="btn-sub-toggle-left">
+                    <svg class="sub-toggle-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Days worked per month (optional)</span>
+                  </div>
+                  <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+
+                <div id="monthlyDaysPopup" class="popup-tab-sheet" aria-hidden="true">
+                  <div class="popup-tab-header">
+                    <span class="popup-tab-title">Monthly Work Days</span>
+                    <button type="button" id="closeMonthlyPopupBtn" class="btn-close-sub" aria-label="Close monthly tab">&times;</button>
+                  </div>
+                  
+                  <div class="popup-tab-body">
+                    <div class="input-field" style="margin-bottom: 10px;">
+                      <label for="inputDaysPerMonth">Workdays in a month:</label>
+                      <input type="number" id="inputDaysPerMonth" class="form-input" value="22" min="1" max="31" step="1" />
+                    </div>
+
+                    <div class="quick-presets-row">
+                      <span class="presets-label">Common:</span>
+                      <button type="button" class="btn-preset" data-days="20">20 d</button>
+                      <button type="button" class="btn-preset active" data-days="22">22 d</button>
+                      <button type="button" class="btn-preset" data-days="24">24 d</button>
+                      <button type="button" class="btn-preset" data-days="26">26 d</button>
+                    </div>
+
+                    <div class="monthly-calc-preview">
+                      <span class="calc-formula-text">Monthly Pay:</span>
+                      <strong id="previewMonthlyTotal" class="calc-formula-val tabular">$5,808.00</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <button type="button" id="createOverviewBtn" class="btn-primary-blue">
@@ -181,6 +225,10 @@
                 <span class="badge-title">Rate:</span>
                 <span id="activePayAmount" class="badge-val tabular">$33.00</span>
                 <span id="activePayUnit" class="badge-unit">/ hr</span>
+              </div>
+              <div id="badgeMonthlyOptional" class="badge-item" style="display: none;">
+                <span class="badge-title">Monthly (<span id="badgeDaysCount">22</span>d):</span>
+                <span id="badgeMonthlyPay" class="badge-val tabular">$5,808.00</span>
               </div>
             </div>
           </div>
@@ -218,7 +266,7 @@
                     <td class="td-val tabular" id="tableWeeklyPay">$1,320.00</td>
                   </tr>
                   <tr id="rowMonthly">
-                    <th scope="row" class="td-row-name">Monthly</th>
+                    <th scope="row" class="td-row-name" id="labelMonthly">Monthly</th>
                     <td class="td-val tabular" id="tableMonthlyPay">$5,720.00</td>
                   </tr>
                 </tbody>

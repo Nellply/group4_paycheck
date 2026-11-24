@@ -19,6 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const hourlyRateInput = document.getElementById("hourlyRateInput");
   const dailyRateInput = document.getElementById("dailyRateInput");
 
+  const toggleMonthlyDaysBtn = document.getElementById("toggleMonthlyDaysBtn");
+  const monthlyDaysPopup = document.getElementById("monthlyDaysPopup");
+  const closeMonthlyPopupBtn = document.getElementById("closeMonthlyPopupBtn");
+  const inputDaysPerMonth = document.getElementById("inputDaysPerMonth");
+  const presetBtns = document.querySelectorAll(".btn-preset");
+  const previewMonthlyTotal = document.getElementById("previewMonthlyTotal");
+
   const overviewTitle = document.getElementById("overviewTitle");
   const liveNetHero = document.getElementById("liveNetHero");
   const liveNetPeriod = document.getElementById("liveNetPeriod");
@@ -26,6 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const activeRateLabel = document.getElementById("activeRateLabel");
   const activePayAmount = document.getElementById("activePayAmount");
   const activePayUnit = document.getElementById("activePayUnit");
+  const badgeMonthlyOptional = document.getElementById("badgeMonthlyOptional");
+  const badgeDaysCount = document.getElementById("badgeDaysCount");
+  const badgeMonthlyPay = document.getElementById("badgeMonthlyPay");
 
   const toggleBreakdownBtn = document.getElementById("toggleBreakdownBtn");
   const toggleBreakdownText = document.getElementById("toggleBreakdownText");
@@ -36,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const rowWeekly = document.getElementById("rowWeekly");
   const rowMonthly = document.getElementById("rowMonthly");
 
+  const labelMonthly = document.getElementById("labelMonthly");
   const tableHourlyPay = document.getElementById("tableHourlyPay");
   const tableDailyPay = document.getElementById("tableDailyPay");
   const tableWeeklyPay = document.getElementById("tableWeeklyPay");
@@ -50,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentCurrency = "USD";
   let isCustomJobMode = false;
   let isBreakdownOpen = false;
+  let isMonthlyPopupOpen = false;
   const USD_TO_PHP_RATE = 58.00;
 
   const JOB_BENCHMARKS_HOURLY = {
@@ -81,6 +93,59 @@ document.addEventListener("DOMContentLoaded", function () {
       toggleBreakdownText.textContent = "View Full Pay Breakdown";
     }
   });
+
+  function setMonthlyPopup(open) {
+    isMonthlyPopupOpen = open;
+    if (isMonthlyPopupOpen) {
+      monthlyDaysPopup.classList.add("open");
+      monthlyDaysPopup.setAttribute("aria-hidden", "false");
+      toggleMonthlyDaysBtn.classList.add("active");
+      toggleMonthlyDaysBtn.setAttribute("aria-expanded", "true");
+    } else {
+      monthlyDaysPopup.classList.remove("open");
+      monthlyDaysPopup.setAttribute("aria-hidden", "true");
+      toggleMonthlyDaysBtn.classList.remove("active");
+      toggleMonthlyDaysBtn.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (toggleMonthlyDaysBtn) {
+    toggleMonthlyDaysBtn.addEventListener("click", function () {
+      setMonthlyPopup(!isMonthlyPopupOpen);
+    });
+  }
+
+  if (closeMonthlyPopupBtn) {
+    closeMonthlyPopupBtn.addEventListener("click", function () {
+      setMonthlyPopup(false);
+    });
+  }
+
+  presetBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const days = this.getAttribute("data-days");
+      if (inputDaysPerMonth) {
+        inputDaysPerMonth.value = days;
+      }
+      presetBtns.forEach(function (b) { b.classList.remove("active"); });
+      this.classList.add("active");
+      calculatePaycheck();
+    });
+  });
+
+  if (inputDaysPerMonth) {
+    inputDaysPerMonth.addEventListener("input", function () {
+      const val = this.value;
+      presetBtns.forEach(function (b) {
+        if (b.getAttribute("data-days") === val) {
+          b.classList.add("active");
+        } else {
+          b.classList.remove("active");
+        }
+      });
+      calculatePaycheck();
+    });
+  }
 
   function setJobMode(custom) {
     isCustomJobMode = custom;
@@ -144,6 +209,11 @@ document.addEventListener("DOMContentLoaded", function () {
       rowHourly.classList.add("highlight-row");
       rowDaily.classList.remove("highlight-row");
 
+      if (badgeMonthlyOptional) {
+        badgeMonthlyOptional.style.display = "none";
+      }
+      setMonthlyPopup(false);
+
       const dailyVal = parseFloat(dailyRateInput.value);
       if (dailyVal > 0 && (!hourlyRateInput.value || parseFloat(hourlyRateInput.value) <= 0)) {
         hourlyRateInput.value = (dailyVal / 8).toFixed(2);
@@ -164,6 +234,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       rowDaily.classList.add("highlight-row");
       rowHourly.classList.remove("highlight-row");
+
+      if (badgeMonthlyOptional) {
+        badgeMonthlyOptional.style.display = "flex";
+      }
 
       const hourlyVal = parseFloat(hourlyRateInput.value);
       if (hourlyVal > 0 && (!dailyRateInput.value || parseFloat(dailyRateInput.value) <= 0)) {
@@ -229,6 +303,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let hRate = 0;
     let dRate = 0;
+    let daysPerMonth = 22;
+
+    if (inputDaysPerMonth) {
+      const parsedDays = parseFloat(inputDaysPerMonth.value);
+      if (!isNaN(parsedDays) && parsedDays > 0) {
+        daysPerMonth = parsedDays;
+      }
+    }
 
     if (currentMode === "hourly") {
       hRate = Math.max(0, parseFloat(hourlyRateInput.value) || 0);
@@ -239,14 +321,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const wGross = hRate * 40;
-    const mGross = wGross * (52 / 12);
+    const mGross = currentMode === "daily" ? (dRate * daysPerMonth) : (wGross * (52 / 12));
 
     if (currentMode === "hourly") {
       activePayAmount.textContent = formatMoney(hRate);
       liveNetHero.textContent = formatMoney(hRate);
+      if (labelMonthly) {
+        labelMonthly.textContent = "Monthly";
+      }
     } else {
       activePayAmount.textContent = formatMoney(dRate);
       liveNetHero.textContent = formatMoney(dRate);
+      if (previewMonthlyTotal) {
+        previewMonthlyTotal.textContent = formatMoney(mGross);
+      }
+      if (badgeDaysCount) {
+        badgeDaysCount.textContent = daysPerMonth;
+      }
+      if (badgeMonthlyPay) {
+        badgeMonthlyPay.textContent = formatMoney(mGross);
+      }
+      if (labelMonthly) {
+        labelMonthly.textContent = `Monthly (${daysPerMonth}d)`;
+      }
     }
 
     tableHourlyPay.textContent = formatMoney(hRate);
