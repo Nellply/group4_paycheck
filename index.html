@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI Design &mdash; Coding with Group 4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app-layout">
+    
+    <header class="top-nav">
+      <div class="nav-brand">Simple UI</div>
+      <div class="nav-center-slot"></div>
+      <div class="nav-year" aria-label="Year 2026">
+        <span class="year-top">20</span>
+        <span class="year-bot">26</span>
+      </div>
+    </header>
+
+    <section class="hero-presentation">
+      <div class="bounding-box-wrapper">
+        <div class="corner-node node-tl" aria-hidden="true"></div>
+        <div class="corner-node node-tr" aria-hidden="true"></div>
+        <div class="corner-node node-bl" aria-hidden="true"></div>
+        <div class="corner-node node-br" aria-hidden="true"></div>
+
+        <h1 class="hero-title">UI Design</h1>
+
+        <div class="figma-cursor" aria-hidden="true">
+          <div class="cursor-glow"></div>
+          <svg class="cursor-svg" viewBox="0 0 100 120" width="84" height="100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(10, 8)">
+              <path d="M12 2 L12 62 L26 48 L38 76 L52 70 L40 42 L58 42 Z" fill="#2a2520" />
+              <path d="M14 6 L14 64 L27 50 L40 78 L54 72 L42 44 L60 44 Z" fill="#443c33" />
+              <path d="M10 4 L10 60 L24 46 L36 74 L50 68 L38 40 L56 40 Z" fill="#756754" />
+              <path d="M6 0 L6 56 L20 42 L32 70 L46 64 L34 36 L52 36 Z" fill="#111111" />
+              <path d="M9 5 L9 48 L19 38 L31 64 L41 60 L31 34 L45 34 Z" fill="#c5cbd3" />
+              <path d="M11 8 L11 43 L18 36 L28 58 L36 55 L28 32 L40 32 Z" fill="#ffffff" />
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <h2 class="hero-subtitle">Coding with Group 4</h2>
+      
+      <hr class="hero-divider" />
+    </section>
+
+    <main class="calculator-app" aria-label="Paycheck &amp; Compensation Calculator">
+      
+      <div class="calc-intro-bar">
+        <div class="calc-intro-text">
+          <h3 class="calc-section-title">Paycheck Calculator</h3>
+        </div>
+
+        <div class="header-controls-group">
+          <div class="currency-toggle-wrapper">
+            <span class="control-label-text">Currency:</span>
+            <div class="segmented-control" role="radiogroup" aria-label="Currency Selection">
+              <button 
+                type="button" 
+                id="currencyUsdBtn" 
+                class="segmented-btn active" 
+                role="radio" 
+                aria-checked="true"
+                title="US Dollars ($)"
+              >
+                USD ($)
+              </button>
+              <button 
+                type="button" 
+                id="currencyPhpBtn" 
+                class="segmented-btn" 
+                role="radio" 
+                aria-checked="false"
+                title="Philippine Peso (₱)"
+              >
+                PHP (₱)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modeler-panels">
+        
+        <section class="panel-inputs card-surface" aria-label="Compensation Parameters">
+          <form id="paycheckForm" onsubmit="event.preventDefault();">
+
+            <div class="pay-type-block">
+              <label class="pay-type-title">Choose Your Pay Type:</label>
+              <div class="pay-type-toggle">
+                <button type="button" id="chooseHourlyBtn" class="pay-choice-btn active" role="tab" aria-selected="true">
+                  <span class="choice-title">Hourly Rate</span>
+                  <span class="choice-subtitle">Paid per hour worked</span>
+                </button>
+                <button type="button" id="chooseDailyBtn" class="pay-choice-btn" role="tab" aria-selected="false">
+                  <span class="choice-title">Daily Rate</span>
+                  <span class="choice-subtitle">Paid per day worked</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="input-field">
+              <label for="inputAge">Age</label>
+              <input type="number" id="inputAge" class="form-input" value="30" min="16" max="95" />
+            </div>
+
+            <div class="input-field">
+              <div class="label-row">
+                <label for="inputJobSelect">Job</label>
+                <button type="button" id="toggleJobModeBtn" class="btn-text-toggle">Type custom job</button>
+              </div>
+              
+              <div id="jobSelectWrapper" class="select-container">
+                <select id="inputJobSelect" class="form-select">
+                  <option value="Web developer" selected>Web developer</option>
+                  <option value="UI/UX Designer">UI/UX Designer</option>
+                  <option value="Software Engineer">Software Engineer</option>
+                  <option value="Virtual Assistant">Virtual Assistant</option>
+                  <option value="Project Manager">Project Manager</option>
+                  <option value="Graphic Designer">Graphic Designer</option>
+                  <option value="Financial Analyst">Financial Analyst</option>
+                  <option value="Accountant">Accountant</option>
+                  <option value="Customer Support">Customer Support</option>
+                  <option value="System Architect">System Architect</option>
+                  <option value="__custom__">+ Enter custom role...</option>
+                </select>
+              </div>
+
+              <div id="jobInputWrapper" class="custom-job-box" style="display: none;">
+                <input 
+                  type="text" 
+                  id="inputJobCustom" 
+                  class="form-input" 
+                  placeholder="Type your job title here..." 
+                />
+              </div>
+            </div>
+
+            <div id="hourlyFieldsContainer" class="mode-fields-wrapper active">
+              <div class="input-field">
+                <label for="hourlyRateInput">Hourly Rate (<span class="curr-sym">$</span>)</label>
+                <input type="number" id="hourlyRateInput" class="form-input font-bold" value="33.00" min="0" step="any" />
+              </div>
+            </div>
+
+            <div id="dailyFieldsContainer" class="mode-fields-wrapper">
+              <div class="input-field">
+                <label for="dailyRateInput">Daily Rate (<span class="curr-sym">$</span>)</label>
+                <input type="number" id="dailyRateInput" class="form-input font-bold" value="264.00" min="0" step="any" />
+              </div>
+            </div>
+
+            <button type="button" id="createOverviewBtn" class="btn-primary-blue">
+              Create salary overview
+            </button>
+          </form>
+        </section>
+
+        <section class="panel-overview card-surface" aria-label="Salary Overview Results">
+          
+          <div class="overview-header-group">
+            <h2 id="overviewTitle" class="overview-main-heading">Your salary overview</h2>
+            <div class="net-summary-text">
+              <span class="net-summary-label">Total Pay:</span>
+              <strong id="liveNetHero" class="net-summary-amount tabular">$33.00</strong>
+              <span id="liveNetPeriod" class="net-summary-period">/ hr</span>
+            </div>
+          </div>
+
+          <div class="active-rate-callout">
+            <div class="active-rate-label" id="activeRateLabel">Active Rate:</div>
+            <div class="active-rate-badges">
+              <div class="badge-item highlight">
+                <span class="badge-title">Rate:</span>
+                <span id="activePayAmount" class="badge-val tabular">$33.00</span>
+                <span id="activePayUnit" class="badge-unit">/ hr</span>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" id="toggleBreakdownBtn" class="btn-breakdown-toggle" aria-expanded="false">
+            <svg class="toggle-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+            <span id="toggleBreakdownText">View Full Pay Breakdown</span>
+          </button>
+
+          <div id="breakdownSheet" class="breakdown-sheet" aria-hidden="true">
+            <div class="breakdown-sheet-header">
+              <span class="sheet-title">Pay Schedule Breakdown</span>
+            </div>
+            <div class="table-responsive">
+              <table class="salary-table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="th-freq">Frequency</th>
+                    <th scope="col" class="th-rate">Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="overviewTableBody">
+                  <tr id="rowHourly">
+                    <th scope="row" class="td-row-name" id="labelHourly">Hourly</th>
+                    <td class="td-val tabular" id="tableHourlyPay">$33.00</td>
+                  </tr>
+                  <tr id="rowDaily">
+                    <th scope="row" class="td-row-name" id="labelDaily">Daily</th>
+                    <td class="td-val tabular" id="tableDailyPay">$264.00</td>
+                  </tr>
+                  <tr id="rowWeekly">
+                    <th scope="row" class="td-row-name">Weekly</th>
+                    <td class="td-val tabular" id="tableWeeklyPay">$1,320.00</td>
+                  </tr>
+                  <tr id="rowMonthly">
+                    <th scope="row" class="td-row-name">Monthly</th>
+                    <td class="td-val tabular" id="tableMonthlyPay">$5,720.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="benchmark-callout">
+            <p class="benchmark-lead-text">On average others in your situation earn:</p>
+            <div class="benchmark-stat-line">
+              <span id="benchmarkAmount" class="benchmark-big-number tabular">$30.87</span>
+              <span id="benchmarkUnit" class="benchmark-stat-unit">/ hr</span>
+            </div>
+            
+            <div id="benchmarkComparison" class="benchmark-tag">
+              <span id="benchmarkComparisonText">Earning 6.9% above average for Web developer</span>
+            </div>
+          </div>
+
+        </section>
+      </div>
+
+    </main>
+
+    <footer class="presentation-footer">
+      <div class="footer-left">
+        <span class="footer-group-name">Group ni Francis</span>
+      </div>
+      <div class="footer-right">
+        <div class="presented-by-label">Presented by :</div>
+        <div class="presenters-grid">
+          <span>Michael</span>
+          <span>Neil</span>
+          <span>Sarah</span>
+          <span>Chemyn</span>
+          <span>Francis</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
