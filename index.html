@@ -307,6 +307,86 @@
       </div>
     </footer>
 
+    <div id="cornerGuideContainer" class="corner-guide-container">
+      <button type="button" id="toggleCornerGuideBtn" class="btn-corner-guide" aria-expanded="false" aria-controls="cornerGuideSheet">
+        <span class="corner-arrow-wrap">
+          <svg class="corner-arrow-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </span>
+        <span class="corner-guide-text">Summary & Functions</span>
+      </button>
+
+      <div id="cornerGuideSheet" class="corner-guide-sheet" aria-hidden="true">
+        <div class="corner-guide-header">
+          <div class="corner-guide-title-box">
+            <span class="corner-guide-badge">Group 4</span>
+            <h3 class="corner-guide-heading">System Summary & Functions</h3>
+          </div>
+          <button type="button" id="closeCornerGuideBtn" class="btn-guide-close" aria-label="Close summary tab">&times;</button>
+        </div>
+
+        <div class="corner-guide-body">
+          <section class="guide-section">
+            <h4 class="guide-sec-title">1. Project Purpose</h4>
+            <p class="guide-sec-desc">
+              Created by <strong>Group ni Francis</strong>, this tool provides clear, transparent salary calculations for hourly freelancers and daily wage earners, removing unnecessary complexities while providing real-time market benchmark feedback.
+            </p>
+          </section>
+
+          <section class="guide-section">
+            <h4 class="guide-sec-title">2. Key Features</h4>
+            <ul class="guide-features-list">
+              <li><strong>Dual Currency:</strong> Toggle between USD ($) and PHP (₱) at an exchange rate of 1 USD = 58.00 PHP.</li>
+              <li><strong>Dual Pay Modes:</strong> Switch seamlessly between Hourly and Daily rates with bidirectional synchronization (8 hours/day).</li>
+              <li><strong>Optional Monthly Workdays Tab:</strong> In Daily mode, click the calendar toggle to specify workdays per month (custom 1-31, or quick presets: 20d, 22d, 24d, 26d).</li>
+              <li><strong>Pay Schedule Breakdown:</strong> Expandable table breaking down Hourly, Daily, Weekly (40h), and Monthly earnings with active row highlights.</li>
+              <li><strong>Market Salary Benchmark:</strong> Real-time comparison against 10 industry professions to show whether your pay is above or below average.</li>
+            </ul>
+          </section>
+
+          <section class="guide-section">
+            <h4 class="guide-sec-title">3. Mathematical Formulas</h4>
+            <div class="guide-formula-card">
+              <span class="formula-label">Daily Rate:</span>
+              <code>Hourly Rate &times; 8</code>
+            </div>
+            <div class="guide-formula-card">
+              <span class="formula-label">Weekly Pay:</span>
+              <code>Hourly Rate &times; 40 hours</code>
+            </div>
+            <div class="guide-formula-card">
+              <span class="formula-label">Monthly (Daily Mode):</span>
+              <code>Daily Rate &times; Workdays per month</code>
+            </div>
+            <div class="guide-formula-card">
+              <span class="formula-label">Monthly (Hourly Mode):</span>
+              <code>Weekly &times; (52 weeks / 12 months)</code>
+            </div>
+            <div class="guide-formula-card">
+              <span class="formula-label">Market Variance (%):</span>
+              <code>((Your Rate - Benchmark) / Benchmark) &times; 100</code>
+            </div>
+          </section>
+
+          <section class="guide-section">
+            <h4 class="guide-sec-title">4. Core Code Functions</h4>
+            <ul class="guide-functions-list">
+              <li><code>calculatePaycheck()</code>: Main calculation engine updating all rates, weekly/monthly values, and benchmarks.</li>
+              <li><code>setPayMode(mode)</code>: Toggles between hourly and daily modes and updates UI containers.</li>
+              <li><code>setCurrency(currency)</code>: Swaps currencies and converts inputs by the exchange rate.</li>
+              <li><code>setMonthlyPopup(open)</code>: Opens/closes the optional monthly days selector tab.</li>
+              <li><code>setJobMode(custom)</code>: Switches between predefined job roles and custom text input.</li>
+            </ul>
+          </section>
+
+          <div class="guide-footer-credits">
+            <span><strong>Presented by:</strong> Michael, Neil, Sarah, Chemyn, Francis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script src="script.js"></script>

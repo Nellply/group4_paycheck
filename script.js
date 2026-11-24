@@ -57,11 +57,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const benchmarkComparisonText = document.getElementById("benchmarkComparisonText");
   const createOverviewBtn = document.getElementById("createOverviewBtn");
 
+  const toggleCornerGuideBtn = document.getElementById("toggleCornerGuideBtn");
+  const cornerGuideSheet = document.getElementById("cornerGuideSheet");
+  const closeCornerGuideBtn = document.getElementById("closeCornerGuideBtn");
+
   let currentMode = "hourly";
   let currentCurrency = "USD";
   let isCustomJobMode = false;
   let isBreakdownOpen = false;
   let isMonthlyPopupOpen = false;
+  let isGuideOpen = false;
   const USD_TO_PHP_RATE = 58.00;
 
   const JOB_BENCHMARKS_HOURLY = {
@@ -120,6 +125,47 @@ document.addEventListener("DOMContentLoaded", function () {
       setMonthlyPopup(false);
     });
   }
+
+  function setCornerGuide(open) {
+    isGuideOpen = open;
+    if (isGuideOpen) {
+      cornerGuideSheet.classList.add("open");
+      cornerGuideSheet.setAttribute("aria-hidden", "false");
+      toggleCornerGuideBtn.classList.add("active");
+      toggleCornerGuideBtn.setAttribute("aria-expanded", "true");
+    } else {
+      cornerGuideSheet.classList.remove("open");
+      cornerGuideSheet.setAttribute("aria-hidden", "true");
+      toggleCornerGuideBtn.classList.remove("active");
+      toggleCornerGuideBtn.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  if (toggleCornerGuideBtn) {
+    toggleCornerGuideBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      setCornerGuide(!isGuideOpen);
+    });
+  }
+
+  if (closeCornerGuideBtn) {
+    closeCornerGuideBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      setCornerGuide(false);
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    if (isGuideOpen && cornerGuideSheet && !cornerGuideSheet.contains(e.target) && !toggleCornerGuideBtn.contains(e.target)) {
+      setCornerGuide(false);
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && isGuideOpen) {
+      setCornerGuide(false);
+    }
+  });
 
   presetBtns.forEach(function (btn) {
     btn.addEventListener("click", function () {
